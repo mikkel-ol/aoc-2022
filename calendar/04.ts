@@ -1025,4 +1025,4 @@ const part2 = arr
   )
   .filter((x) => x).length;
 
-export { part1, part2 };
+export default [part1, part2];

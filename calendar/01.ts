@@ -2257,4 +2257,4 @@ const part2 = input
   .slice(0, 3)
   .reduce((curr, next) => curr + next);
 
-export { part1, part2 };
+export default [part1, part2];

@@ -2501,4 +2501,4 @@ A Z`;
 
 const sadge = "forgot to save solution :(";
 
-export { sadge };
+export default [sadge, sadge];

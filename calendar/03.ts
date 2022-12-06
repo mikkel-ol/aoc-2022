@@ -336,4 +336,4 @@ const part2 = _(arr)
   )
   .reduce((curr, next) => curr + next, 0);
 
-export { part1, part2 };
+export default [part1, part2];

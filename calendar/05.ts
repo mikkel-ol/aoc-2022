@@ -547,4 +547,4 @@ moves.forEach(([amount, from, to]) =>
 
 const part2 = result2Arr.map((x) => x[0]).join("");
 
-export { part1, part2 };
+export default [part1, part2];

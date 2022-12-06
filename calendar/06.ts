@@ -24,4 +24,4 @@ const part2 = input
   )
   .filter((x): x is number => !!x)[0];
 
-export { part1, part2 };
+export default [part1, part2];
