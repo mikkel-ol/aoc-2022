@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import "./extensions";
 
 fs.readdir("./calendar", (_err, files) => {
   files.forEach((file) => {

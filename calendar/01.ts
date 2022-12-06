@@ -2243,46 +2243,13 @@ const input = `10062
 2406
 5967`;
 
-declare global {
-  interface Array<T> {
-    chunkByDelim: (delim: string) => T[][];
-    max: () => T;
-  }
-}
-
-if (!Array.prototype.chunkByDelim) {
-  Array.prototype.chunkByDelim = function <T>(delim: string) {
-    const newArr: T[][] = [];
-
-    let i = 0;
-
-    for (const entry of this) {
-      if (!newArr[i]) newArr[i] = [];
-
-      newArr[i].push(entry);
-
-      if (entry === delim) {
-        i += 1;
-      }
-    }
-
-    return newArr;
-  };
-}
-
-if (!Array.prototype.max) {
-  Array.prototype.max = function () {
-    return this.sort((a, b) => b - a)[0];
-  };
-}
-
-const result1 = input
+const part1 = input
   .split("\n")
   .chunkByDelim("")
   .map((arr) => arr.map((x) => Number(x)).reduce((curr, next) => curr + next))
   .max();
 
-const result2 = input
+const part2 = input
   .split("\n")
   .chunkByDelim("")
   .map((arr) => arr.map((x) => Number(x)).reduce((curr, next) => curr + next))
@@ -2290,4 +2257,4 @@ const result2 = input
   .slice(0, 3)
   .reduce((curr, next) => curr + next);
 
-export { result1, result2 };
+export { part1, part2 };
