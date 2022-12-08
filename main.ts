@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import * as fs from "node:fs";
+import fs from "node:fs";
 import "./extensions";
 
 fs.readdir(`${__dirname}/calendar`, (_err, files) => {
