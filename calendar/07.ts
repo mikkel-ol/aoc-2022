@@ -1081,68 +1081,45 @@ $ cd tcdmgwp
 $ ls
 277338 wshwhzw`;
 
-const sizeLimit = 100000;
-
 const arr = input.split("\n");
 
-const topLevelFolder = `dir brhvclj
-dir clnvqg
-dir dtqtvvrn
-dir lcz
-dir pcqjncwl
-dir qwvfpgl
-dir rtmj
-dir shg
-dir tcdmgwp`;
+const path: string[] = [];
+const dirs: { dirName: string; size: number }[] = [];
 
-function size(line: string): number {
-  // is a command
-  if (line[0] === "$") {
-    return 0;
-  }
+arr.forEach((line) => {
+  const parsedSize = parseInt(line.split(" ")[0]);
 
-  // is a dir
-  if (line.slice(0, 3) === "dir") {
-    const dirName = line.slice(line.indexOf(" ") + 1, line.length);
+  if (line === "$ cd ..") path.splice(-1);
+  else if (line.startsWith("$ cd")) {
+    const folder = line.split(" ").at(-1) ?? "";
 
-    // cd dirName
-    // ls
-    // ... content
-    const indexOfDirectoryContentStart = arr.indexOf(`$ cd ${dirName}`) + 2;
-    let indexOfDirectoryContentEnd = -1;
+    path.push(folder);
 
-    for (let i = indexOfDirectoryContentStart; i < arr.length; i += 1) {
-      const element = arr[i];
+    const dirName = path.join("/");
 
-      if (element.startsWith("$")) {
-        indexOfDirectoryContentEnd = i;
-        break;
-      }
+    if (!dirs.some((x) => x.dirName === dirName)) {
+      dirs.push({ dirName, size: 0 });
     }
+  } else if (!isNaN(parsedSize)) {
+    const dirName = path.join("/");
 
-    const content = arr.slice(
-      indexOfDirectoryContentStart,
-      indexOfDirectoryContentEnd
-    );
-
-    const dirSize = content
-      .map((x) => size(x))
-      .reduce((curr, next) => curr + next);
-
-    return dirSize <= sizeLimit ? dirSize : 0;
+    dirs
+      .filter((x) => dirName.includes(x.dirName))
+      .forEach((x) => (x.size += parsedSize));
   }
+});
 
-  // is a file
-  if (!isNaN(parseInt(line[0]))) {
-    return parseInt(line.slice(0, line.indexOf(" ")));
-  }
-
-  return 0;
-}
-
-const part1 = topLevelFolder
-  .split("\n")
-  .map((folder) => size(folder))
+const part1 = dirs
+  .filter((x) => x.size <= 100000)
+  .map((x) => x.size)
   .reduce((curr, next) => curr + next);
 
-export default [part1];
+const totalSpaceUsed = dirs.find((x) => x.dirName === "/")!.size;
+const freeSpace = 70000000 - totalSpaceUsed;
+const freeSpaceNeeded = 30000000 - freeSpace;
+
+const part2 = dirs
+  .filter((x) => x.size >= freeSpaceNeeded)
+  .sort((a, b) => a.size - b.size)[0].size;
+
+export default [part1, part2];
