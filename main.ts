@@ -2,9 +2,9 @@ import chalk from "chalk";
 import * as fs from "node:fs";
 import "./extensions";
 
-fs.readdir("./calendar", (_err, files) => {
+fs.readdir(`${__dirname}/calendar`, (_err, files) => {
   files.forEach((file) => {
-    const solution = require(`./calendar/${file}`).default;
+    const solution = require(`${__dirname}/calendar/${file}`).default;
 
     const headline = chalk.underline(
       `Solution for day ${file.slice(0, file.indexOf("."))}`

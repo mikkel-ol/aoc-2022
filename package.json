@@ -4,7 +4,7 @@
   "description": "AoC solutions",
   "main": "main.ts",
   "scripts": {
-    "build": "tsc main.ts --outDir build",
+    "build": "tsc --outDir build",
     "start": "ts-node main.ts",
     "watch": "nodemon -e ts"
   },
